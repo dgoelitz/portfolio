@@ -1,0 +1,451 @@
+:root {
+  color-scheme: dark;
+  --bg: #050505;
+  --panel: #0c0c0c;
+  --text: #fff6e5;
+  --muted: #c69b55;
+  --accent: #ffa300;
+  --accent-soft: rgba(255, 163, 0, 0.18);
+  --line: rgba(255, 246, 229, 0.14);
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
+  --radius: 8px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  overflow-x: clip;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.18em;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.site-shell {
+  width: 100%;
+  min-height: 100vh;
+  margin-inline: 0;
+  padding: clamp(2.5rem, 6vw, 5.5rem) 0 clamp(3.5rem, 7vw, 5.5rem);
+  overflow-x: clip;
+  background: var(--bg);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 52vw) minmax(15rem, 1fr);
+  align-items: start;
+  gap: clamp(1.25rem, 6vw, 5rem);
+  width: 100%;
+  padding-inline-end: clamp(1.25rem, 5vw, 5rem);
+}
+
+.intro__photo {
+  width: 100%;
+  aspect-ratio: 1.55;
+  object-fit: cover;
+  object-position: 50% 58%;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.intro__identity {
+  padding-block-start: clamp(0.25rem, 2vw, 1rem);
+  color: var(--accent);
+  font-style: italic;
+  text-align: right;
+}
+
+.intro__identity h1,
+.intro__identity p {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.12;
+  white-space: nowrap;
+}
+
+.bio {
+  width: min(100% - 2.5rem, 930px);
+  margin: clamp(6rem, 13vw, 11rem) auto clamp(8rem, 16vw, 14rem);
+  text-align: center;
+}
+
+.bio p {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(1.15rem, 3vw, 1.7rem);
+  line-height: 1.2;
+}
+
+.projects h2 {
+  margin: 0 0 clamp(5rem, 10vw, 8rem);
+  color: var(--accent);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  text-align: center;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 26rem));
+  justify-content: center;
+  gap: clamp(8rem, 16vw, 14rem) clamp(3rem, 10vw, 9rem);
+  width: min(100% - 2.5rem, 1040px);
+  margin-inline: auto;
+}
+
+.project-card {
+  display: grid;
+  width: 100%;
+  gap: clamp(1.75rem, 5vw, 2.8rem);
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.project-card__title {
+  min-height: 1.4em;
+  font-size: clamp(1.1rem, 3vw, 1.65rem);
+  text-align: center;
+}
+
+.project-card__image-frame {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.42;
+  border-radius: var(--radius);
+  background: #161616;
+  transition:
+    transform 420ms var(--ease-out),
+    box-shadow 420ms var(--ease-out),
+    filter 420ms var(--ease-out);
+}
+
+.project-card__image-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(130deg, rgba(255, 255, 255, 0.24), transparent 28%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.28), transparent 50%);
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+}
+
+.project-card img,
+.project-hero-image {
+  view-transition-name: var(--project-transition-name);
+}
+
+.project-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 650ms var(--ease-out), object-position 650ms var(--ease-out);
+}
+
+.project-card--book img {
+  object-position: 50% 18%;
+  scale: 1.35;
+}
+
+.project-card--pottery img {
+  object-position: 50% 22%;
+  scale: 1.42;
+}
+
+.project-card--game img {
+  object-position: 50% 57%;
+  scale: 1.28;
+}
+
+.project-card--reminders img {
+  object-position: 51% 43%;
+  scale: 1.48;
+}
+
+.project-card:hover .project-card__image-frame,
+.project-card:focus-visible .project-card__image-frame {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 55px rgba(255, 163, 0, 0.18);
+  filter: saturate(1.08);
+}
+
+.project-card:hover .project-card__image-frame::after,
+.project-card:focus-visible .project-card__image-frame::after {
+  opacity: 1;
+}
+
+.project-card:hover img,
+.project-card:focus-visible img {
+  object-position: 50% 50%;
+  scale: 1.08;
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2rem, 10vw, 11rem);
+  margin-block-start: clamp(8rem, 16vw, 13rem);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+.project-page {
+  background: var(--bg);
+}
+
+.project-detail {
+  width: min(100%, 1180px);
+  min-height: 100vh;
+  margin-inline: auto;
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-block-end: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.project-article {
+  display: grid;
+  grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr);
+  gap: clamp(1.6rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.project-hero {
+  position: sticky;
+  top: 2rem;
+  animation: fade-up 650ms var(--ease-out) both 160ms;
+}
+
+.project-kicker {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-hero h1 {
+  margin: 0;
+  color: var(--accent);
+  max-width: 100%;
+  overflow-wrap: break-word;
+  font-size: clamp(2.25rem, 5.4vw, 4.35rem);
+  line-height: 1;
+}
+
+.project-summary {
+  margin: 1.25rem 0 0;
+  max-width: 34rem;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  line-height: 1.35;
+}
+
+.project-hero-image {
+  width: 100%;
+  max-height: min(72vh, 760px);
+  object-fit: contain;
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.project-copy {
+  grid-column: 2;
+  max-width: 68ch;
+  padding-block: clamp(2rem, 6vw, 4rem);
+  border-top: 1px solid var(--line);
+  animation: fade-up 780ms var(--ease-out) both 360ms;
+}
+
+.project-copy h2 {
+  margin: 0 0 1rem;
+  color: var(--accent);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.project-copy p {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.65;
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.4rem;
+  margin-block-start: 1.4rem;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 520ms;
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-group(book-list-image),
+::view-transition-group(pottery-business-apps-image),
+::view-transition-group(game-from-scratch-image),
+::view-transition-group(reminders-image) {
+  animation-duration: 720ms;
+  animation-timing-function: var(--ease-out);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-28vw);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(28vw);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .project-card {
+    opacity: 0;
+    animation-duration: 1ms;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 34%;
+  }
+
+  .project-card:nth-child(odd) {
+    animation-name: slide-from-left;
+  }
+
+  .project-card:nth-child(even) {
+    animation-name: slide-from-right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .project-card {
+    opacity: 1;
+  }
+
+  .project-card img {
+    scale: 1;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-shell {
+    width: calc(100% - 2rem);
+    margin-block: 1rem;
+    padding: 1.25rem 1rem 2.5rem;
+  }
+
+  .intro,
+  .project-article {
+    grid-template-columns: 1fr;
+  }
+
+  .intro__identity {
+    order: -1;
+    text-align: right;
+  }
+
+  .intro__photo {
+    width: 100%;
+    aspect-ratio: 1.55;
+  }
+
+  .bio {
+    margin-block: 4rem 5.5rem;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    gap: 5.5rem;
+  }
+
+  .project-card__image-frame {
+    aspect-ratio: 1.35;
+  }
+
+  .contact {
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .project-hero {
+    position: static;
+  }
+
+  .project-copy {
+    grid-column: auto;
+  }
+}
