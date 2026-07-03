@@ -10,9 +10,18 @@
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
   --radius: 8px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --book-crop-position: 0% 42%;
+  --book-crop-origin: 0% 42%;
+  --book-crop-scale: 1.35;
   --pottery-crop-position: 50% 15%;
   --pottery-crop-origin: 50% 6%;
   --pottery-crop-scale: 3.6;
+  --game-crop-position: 82% 28%;
+  --game-crop-origin: 82% 28%;
+  --game-crop-scale: 2.55;
+  --reminders-crop-position: 83% 43%;
+  --reminders-crop-origin: 83% 43%;
+  --reminders-crop-scale: 1.92;
 }
 
 @view-transition {
@@ -132,6 +141,7 @@ a:focus-visible {
   display: grid;
   width: 100%;
   gap: clamp(1.75rem, 5vw, 2.8rem);
+  scroll-margin-block-start: clamp(1.5rem, 5vw, 3rem);
   text-decoration: none;
   color: var(--accent);
 }
@@ -198,8 +208,9 @@ a:focus-visible {
 }
 
 .project-card--book img {
-  object-position: 50% 18%;
-  scale: 1.35;
+  object-position: var(--book-crop-position);
+  transform-origin: var(--book-crop-origin);
+  scale: var(--book-crop-scale);
 }
 
 .project-card--pottery img {
@@ -209,13 +220,15 @@ a:focus-visible {
 }
 
 .project-card--game img {
-  object-position: 50% 57%;
-  scale: 1.28;
+  object-position: var(--game-crop-position);
+  transform-origin: var(--game-crop-origin);
+  scale: var(--game-crop-scale);
 }
 
 .project-card--reminders img {
-  object-position: 51% 43%;
-  scale: 1.48;
+  object-position: var(--reminders-crop-position);
+  transform-origin: var(--reminders-crop-origin);
+  scale: var(--reminders-crop-scale);
 }
 
 .project-card:hover .project-card__image-frame,
@@ -265,24 +278,30 @@ a:focus-visible {
   align-items: start;
 }
 
-.project-article--pottery {
+.project-article--pottery,
+.project-article--reminders {
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.55fr);
 }
 
-.project-article--pottery .project-hero {
+.project-article--pottery .project-hero,
+.project-article--reminders .project-hero {
   grid-column: 2;
 }
 
 .project-article--pottery .project-media,
-.project-article--pottery .project-copy {
+.project-article--pottery .project-copy,
+.project-article--reminders .project-media,
+.project-article--reminders .project-copy {
   grid-column: 1;
 }
 
-.project-article--pottery .project-media {
+.project-article--pottery .project-media,
+.project-article--reminders .project-media {
   grid-row: 1;
 }
 
-.project-article--pottery .project-copy {
+.project-article--pottery .project-copy,
+.project-article--reminders .project-copy {
   grid-row: 2;
 }
 
@@ -393,45 +412,109 @@ a:focus-visible {
   animation-timing-function: var(--ease-out);
 }
 
-::view-transition-image-pair(pottery-business-apps-image) {
+::view-transition-image-pair(book-list-image),
+::view-transition-image-pair(pottery-business-apps-image),
+::view-transition-image-pair(game-from-scratch-image),
+::view-transition-image-pair(reminders-image) {
   border-radius: var(--radius);
   isolation: isolate;
   overflow: clip;
 }
 
+::view-transition-old(book-list-image),
+::view-transition-new(book-list-image) {
+  --project-crop-origin: var(--book-crop-origin);
+  --project-crop-scale: var(--book-crop-scale);
+  object-position: var(--book-crop-position);
+}
+
 ::view-transition-old(pottery-business-apps-image),
 ::view-transition-new(pottery-business-apps-image) {
+  --project-crop-origin: var(--pottery-crop-origin);
+  --project-crop-scale: var(--pottery-crop-scale);
+  object-position: var(--pottery-crop-position);
+}
+
+::view-transition-old(game-from-scratch-image),
+::view-transition-new(game-from-scratch-image) {
+  --project-crop-origin: var(--game-crop-origin);
+  --project-crop-scale: var(--game-crop-scale);
+  object-position: var(--game-crop-position);
+}
+
+::view-transition-old(reminders-image),
+::view-transition-new(reminders-image) {
+  --project-crop-origin: var(--reminders-crop-origin);
+  --project-crop-scale: var(--reminders-crop-scale);
+  object-position: var(--reminders-crop-position);
+}
+
+::view-transition-old(book-list-image),
+::view-transition-new(book-list-image),
+::view-transition-old(pottery-business-apps-image),
+::view-transition-new(pottery-business-apps-image),
+::view-transition-old(game-from-scratch-image),
+::view-transition-new(game-from-scratch-image),
+::view-transition-old(reminders-image),
+::view-transition-new(reminders-image) {
   animation: none;
   block-size: 100%;
   mix-blend-mode: normal;
   inline-size: 100%;
   object-fit: cover;
-  object-position: var(--pottery-crop-position);
 }
 
+:root:has(body.project-page)::view-transition-old(book-list-image),
 :root:has(body.project-page)::view-transition-old(pottery-business-apps-image) {
   opacity: 0;
 }
 
+:root:has(body.project-page)::view-transition-new(book-list-image),
 :root:has(body.project-page)::view-transition-new(pottery-business-apps-image) {
-  animation: pottery-zoom-out 900ms var(--ease-out) both;
+  animation: project-zoom-out 900ms var(--ease-out) both;
   opacity: 1;
-  transform-origin: var(--pottery-crop-origin);
+  transform-origin: var(--project-crop-origin);
 }
 
+:root:has(body.project-page)::view-transition-old(game-from-scratch-image),
+:root:has(body.project-page)::view-transition-old(reminders-image) {
+  opacity: 0;
+}
+
+:root:has(body.project-page)::view-transition-new(game-from-scratch-image),
+:root:has(body.project-page)::view-transition-new(reminders-image) {
+  animation: project-zoom-out 900ms var(--ease-out) both;
+  opacity: 1;
+  transform-origin: var(--project-crop-origin);
+}
+
+:root:not(:has(body.project-page))::view-transition-old(book-list-image),
 :root:not(:has(body.project-page))::view-transition-old(pottery-business-apps-image) {
-  animation: pottery-zoom-in 900ms var(--ease-out) both;
+  animation: project-zoom-in 900ms var(--ease-out) both;
   opacity: 1;
-  transform-origin: var(--pottery-crop-origin);
+  transform-origin: var(--project-crop-origin);
 }
 
+:root:not(:has(body.project-page))::view-transition-new(book-list-image),
 :root:not(:has(body.project-page))::view-transition-new(pottery-business-apps-image) {
   opacity: 0;
 }
 
-@keyframes pottery-zoom-out {
+:root:not(:has(body.project-page))::view-transition-old(game-from-scratch-image),
+:root:not(:has(body.project-page))::view-transition-old(reminders-image) {
+  animation: project-zoom-in 900ms var(--ease-out) both;
+  opacity: 1;
+  transform-origin: var(--project-crop-origin);
+}
+
+:root:not(:has(body.project-page))::view-transition-new(game-from-scratch-image),
+:root:not(:has(body.project-page))::view-transition-new(reminders-image) {
+  opacity: 0;
+}
+
+@keyframes project-zoom-out {
   from {
-    transform: scale(var(--pottery-crop-scale));
+    transform: scale(var(--project-crop-scale));
   }
 
   to {
@@ -439,13 +522,13 @@ a:focus-visible {
   }
 }
 
-@keyframes pottery-zoom-in {
+@keyframes project-zoom-in {
   from {
     transform: scale(1);
   }
 
   to {
-    transform: scale(var(--pottery-crop-scale));
+    transform: scale(var(--project-crop-scale));
   }
 }
 
@@ -570,6 +653,9 @@ a:focus-visible {
   .project-article--pottery .project-hero,
   .project-article--pottery .project-media,
   .project-article--pottery .project-copy,
+  .project-article--reminders .project-hero,
+  .project-article--reminders .project-media,
+  .project-article--reminders .project-copy,
   .project-copy {
     grid-column: auto;
     grid-row: auto;
