@@ -10,6 +10,9 @@
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
   --radius: 8px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --pottery-crop-position: 50% 15%;
+  --pottery-crop-origin: 50% 6%;
+  --pottery-crop-scale: 3.6;
 }
 
 @view-transition {
@@ -20,10 +23,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  view-transition-name: none;
+}
+
 html {
   background: var(--bg);
   overflow-x: clip;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -160,16 +167,34 @@ a:focus-visible {
   transition: opacity 420ms var(--ease-out);
 }
 
-.project-card img,
-.project-hero-image {
+.project-card__image-frame,
+.project-hero-image,
+.project-hero-frame {
   view-transition-name: var(--project-transition-name);
+}
+
+.project-card--book .project-card__image-frame {
+  view-transition-name: book-list-image;
+}
+
+.project-card--pottery .project-card__image-frame {
+  view-transition-name: pottery-business-apps-image;
+}
+
+.project-card--game .project-card__image-frame {
+  view-transition-name: game-from-scratch-image;
+}
+
+.project-card--reminders .project-card__image-frame {
+  view-transition-name: reminders-image;
 }
 
 .project-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: scale 650ms var(--ease-out), object-position 650ms var(--ease-out);
+  transform-origin: 50% 50%;
+  transition: scale 500ms var(--ease-out), object-position 500ms var(--ease-out);
 }
 
 .project-card--book img {
@@ -178,8 +203,9 @@ a:focus-visible {
 }
 
 .project-card--pottery img {
-  object-position: 50% 22%;
-  scale: 1.42;
+  object-position: var(--pottery-crop-position);
+  transform-origin: var(--pottery-crop-origin);
+  scale: var(--pottery-crop-scale);
 }
 
 .project-card--game img {
@@ -202,12 +228,6 @@ a:focus-visible {
 .project-card:hover .project-card__image-frame::after,
 .project-card:focus-visible .project-card__image-frame::after {
   opacity: 1;
-}
-
-.project-card:hover img,
-.project-card:focus-visible img {
-  object-position: 50% 50%;
-  scale: 1.08;
 }
 
 .contact {
@@ -245,6 +265,27 @@ a:focus-visible {
   align-items: start;
 }
 
+.project-article--pottery {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.55fr);
+}
+
+.project-article--pottery .project-hero {
+  grid-column: 2;
+}
+
+.project-article--pottery .project-media,
+.project-article--pottery .project-copy {
+  grid-column: 1;
+}
+
+.project-article--pottery .project-media {
+  grid-row: 1;
+}
+
+.project-article--pottery .project-copy {
+  grid-row: 2;
+}
+
 .project-hero {
   position: sticky;
   top: 2rem;
@@ -275,13 +316,40 @@ a:focus-visible {
   line-height: 1.35;
 }
 
-.project-hero-image {
+.project-media {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.project-hero-image,
+.project-secondary-image {
   width: 100%;
-  max-height: min(72vh, 760px);
   object-fit: contain;
   border-radius: var(--radius);
   background: var(--panel);
   box-shadow: var(--shadow);
+}
+
+.project-hero-image {
+  max-height: min(72vh, 760px);
+}
+
+.project-hero-frame {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.project-hero-frame .project-hero-image {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  view-transition-name: none;
+}
+
+.project-secondary-image {
+  max-height: min(64vh, 620px);
 }
 
 .project-copy {
@@ -305,6 +373,10 @@ a:focus-visible {
   line-height: 1.65;
 }
 
+.project-copy p + p {
+  margin-block-start: 1rem;
+}
+
 .project-links {
   display: flex;
   flex-wrap: wrap;
@@ -313,18 +385,68 @@ a:focus-visible {
   font-size: clamp(1rem, 2vw, 1.15rem);
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 520ms;
-  animation-timing-function: var(--ease-out);
-}
-
 ::view-transition-group(book-list-image),
 ::view-transition-group(pottery-business-apps-image),
 ::view-transition-group(game-from-scratch-image),
 ::view-transition-group(reminders-image) {
-  animation-duration: 720ms;
+  animation-duration: 900ms;
   animation-timing-function: var(--ease-out);
+}
+
+::view-transition-image-pair(pottery-business-apps-image) {
+  border-radius: var(--radius);
+  isolation: isolate;
+  overflow: clip;
+}
+
+::view-transition-old(pottery-business-apps-image),
+::view-transition-new(pottery-business-apps-image) {
+  animation: none;
+  block-size: 100%;
+  mix-blend-mode: normal;
+  inline-size: 100%;
+  object-fit: cover;
+  object-position: var(--pottery-crop-position);
+}
+
+:root:has(body.project-page)::view-transition-old(pottery-business-apps-image) {
+  opacity: 0;
+}
+
+:root:has(body.project-page)::view-transition-new(pottery-business-apps-image) {
+  animation: pottery-zoom-out 900ms var(--ease-out) both;
+  opacity: 1;
+  transform-origin: var(--pottery-crop-origin);
+}
+
+:root:not(:has(body.project-page))::view-transition-old(pottery-business-apps-image) {
+  animation: pottery-zoom-in 900ms var(--ease-out) both;
+  opacity: 1;
+  transform-origin: var(--pottery-crop-origin);
+}
+
+:root:not(:has(body.project-page))::view-transition-new(pottery-business-apps-image) {
+  opacity: 0;
+}
+
+@keyframes pottery-zoom-out {
+  from {
+    transform: scale(var(--pottery-crop-scale));
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes pottery-zoom-in {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(var(--pottery-crop-scale));
+  }
 }
 
 @keyframes fade-up {
@@ -445,7 +567,11 @@ a:focus-visible {
     position: static;
   }
 
+  .project-article--pottery .project-hero,
+  .project-article--pottery .project-media,
+  .project-article--pottery .project-copy,
   .project-copy {
     grid-column: auto;
+    grid-row: auto;
   }
 }

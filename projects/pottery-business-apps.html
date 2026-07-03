@@ -5,27 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="view-transition" content="same-origin">
     <title>Mud Goods | David Goelitz</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles.css?v=20260702-3">
   </head>
   <body class="project-page">
     <main class="project-detail">
-      <a class="back-link" href="../index.html">Back</a>
+      <a class="back-link" href="/index.html?from=project&v=20260702#projects">Back</a>
 
       <article class="project-article project-article--pottery">
         <header class="project-hero">
           <p class="project-kicker">Public project</p>
           <h1>Mud Goods</h1>
           <p class="project-summary">
-            Tools for tracking pottery work and helping art market customers pay quickly.
+            Tools for tracking pottery work and running a small business.
           </p>
         </header>
 
-        <img
-          class="project-hero-image"
-          src="../assets/projects/pottery-business-apps.png"
-          alt="Mud Goods payment selection app"
-          style="--project-transition-name: pottery-business-apps-image"
-        >
+        <div class="project-media">
+          <div class="project-hero-frame" style="--project-transition-name: pottery-business-apps-image">
+            <img
+              class="project-hero-image"
+              src="../assets/projects/pottery-business-apps.png"
+              alt="Mud Goods payment selection app"
+            >
+          </div>
+          <img
+            class="project-secondary-image"
+            src="../assets/projects/pottery-tracker.png"
+            alt="Mud Goods pottery tracker stage dashboard"
+          >
+        </div>
 
         <section class="project-copy" aria-label="Project details">
           <h2>Mud Goods</h2>
@@ -43,6 +51,18 @@
             Next was a quick and clean payments app for customers at art markets.
             They scan a QR code and have three options to click through and pay.
           </p>
+          <p>
+            Coming soon, is her store front. In my local version, the tracking app
+            is built out to allow her to publish listings directly and the storefront
+            can only read listings from the Azure Cosmos DB, not write or access
+            anything else. Security practices are top of mind for me in this suite
+            of apps.
+          </p>
+          <div class="project-links" aria-label="Project links">
+            <a href="https://mudgoodspayment.vercel.app/" rel="noreferrer">Payment app</a>
+            <a href="https://github.com/dgoelitz/mudgoodspayment" rel="noreferrer">Payment app GitHub</a>
+            <a href="https://github.com/dgoelitz/pottery-tracker" rel="noreferrer">Pottery tracker GitHub</a>
+          </div>
         </section>
       </article>
     </main>

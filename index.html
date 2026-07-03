@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="view-transition" content="same-origin">
     <title>David Goelitz | Software Engineer II</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260702-3">
   </head>
   <body>
     <main class="site-shell">
@@ -31,50 +31,58 @@
         </p>
       </section>
 
-      <section class="projects" aria-labelledby="projects-title">
+      <section class="projects" id="projects" aria-labelledby="projects-title">
         <h2 id="projects-title">A few little public projects</h2>
 
         <div class="project-grid">
           <a class="project-card project-card--book" href="projects/book-list.html">
             <span class="project-card__title">Book List</span>
-            <span class="project-card__image-frame">
+            <span
+              class="project-card__image-frame"
+              style="--project-transition-name: book-list-image"
+            >
               <img
                 src="assets/projects/book-list.png"
                 alt="Book list app table showing Modern Library novels"
-                style="--project-transition-name: book-list-image"
               >
             </span>
           </a>
 
           <a class="project-card project-card--pottery" href="projects/pottery-business-apps.html">
             <span class="project-card__title">Pottery Business Apps</span>
-            <span class="project-card__image-frame">
+            <span
+              class="project-card__image-frame"
+              style="--project-transition-name: pottery-business-apps-image"
+            >
               <img
                 src="assets/projects/pottery-business-apps.png"
                 alt="Mud Goods payment selection app"
-                style="--project-transition-name: pottery-business-apps-image"
               >
             </span>
           </a>
 
           <a class="project-card project-card--game" href="projects/game-from-scratch.html">
             <span class="project-card__title">Game From Scratch</span>
-            <span class="project-card__image-frame">
+            <span
+              class="project-card__image-frame"
+              style="--project-transition-name: game-from-scratch-image"
+            >
               <img
                 src="assets/projects/game-from-scratch.png"
                 alt="Pixel art adventure game screenshot"
-                style="--project-transition-name: game-from-scratch-image"
               >
             </span>
           </a>
 
           <a class="project-card project-card--reminders" href="projects/reminders.html">
             <span class="project-card__title">Reminders</span>
-            <span class="project-card__image-frame">
+            <span
+              class="project-card__image-frame"
+              style="--project-transition-name: reminders-image"
+            >
               <img
                 src="assets/projects/reminders.png"
                 alt="Reminder list app with completed items"
-                style="--project-transition-name: reminders-image"
               >
             </span>
           </a>
